@@ -1,0 +1,52 @@
+
+FROM ubuntu:19.04
+
+# Turn off setup script questions
+ENV DEBIAN_FRONTEND noninteractive
+
+EXPOSE 9000
+
+RUN apt-get update && \
+    apt-get install -y \
+    locales apt-utils
+
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+
+RUN apt-get update && \
+    apt-get install -y \
+    software-properties-common curl htop zip unzip wget git && \
+    add-apt-repository -y ppa:ondrej/php && \
+    apt-get update && \
+    apt-get install -y \
+    libcurl4-openssl-dev pkg-config libssl-dev zlib1g-dev libxml++2.6-dev libcurl3-dev openssh-server \
+    php7.3-cli php7.3-curl php7.3-fpm php7.3-mbstring php7.3-pdo php7.3-mysql php7.3-xml php7.3-common php7.3-json php7.3-bcmath php 7.3-ctype php7.3-tokenizer && \
+    curl -sS https://getcomposer.org/installer | php && \
+    mv composer.phar /usr/local/bin/composer
+
+# https://github.com/docker-library/php/blob/e63194a0006848edb13b7eff5a7f9d790d679428/7.1/jessie/fpm/Dockerfile
+RUN set -ex \
+    && cd /etc/php/7.3/fpm \
+    && { \
+        echo '[global]'; \
+        echo 'error_log = /proc/self/fd/2'; \
+        echo; \
+        echo '[www]'; \
+        echo '; if we send this to /proc/self/fd/1, it never appears'; \
+        echo 'access.log = /proc/self/fd/2'; \
+        echo; \
+        echo 'clear_env = no'; \
+        echo; \
+        echo '; Ensure worker stdout and stderr are sent to the main error log.'; \
+        echo 'catch_workers_output = yes'; \
+        echo '[global]'; \
+        echo 'daemonize = no'; \
+        echo; \
+        echo '[www]'; \
+        echo 'listen = 9000'; \
+    } | tee -a pool.d/www.conf
+
+# Need this directory so fpm can add it's .sock file
+RUN mkdir -p /run/php/
