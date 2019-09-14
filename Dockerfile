@@ -22,7 +22,7 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y \
     libcurl4-openssl-dev pkg-config libssl-dev zlib1g-dev libxml++2.6-dev libcurl3-dev openssh-server \
-    php7.3-cli php7.3-curl php7.3-fpm php7.3-mbstring php7.3-pdo php7.3-mysql php7.3-xml php7.3-common php7.3-json php7.3-bcmath php 7.3-ctype php7.3-tokenizer && \
+    php7.3-cli php7.3-curl php7.3-fpm php7.3-mbstring php7.3-pdo php7.3-mysql php7.3-xml php7.3-common php7.3-json php7.3-bcmath php 7.3-ctype php7.3-tokenizer php7.3-redis && \
     curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
 
