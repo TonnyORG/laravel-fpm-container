@@ -1,5 +1,5 @@
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 # Turn off setup script questions
 ENV DEBIAN_FRONTEND noninteractive
@@ -22,13 +22,13 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y \
     libcurl4-openssl-dev pkg-config libssl-dev zlib1g-dev libxml++2.6-dev libcurl3-dev openssh-server \
-    php7.4-cli php7.4-curl php7.4-fpm php7.4-mbstring php7.4-pdo php7.4-mysql php7.4-xml php7.4-common php7.4-json php7.4-bcmath php7.4-ctype php7.4-tokenizer php7.4-redis && \
+    php8.0-cli php8.0-curl php8.0-fpm php8.0-mbstring php8.0-pdo php8.0-mysql php8.0-xml php8.0-common php8.0-bcmath php8.0-ctype php8.0-tokenizer php8.0-redis && \
     curl -sS https://getcomposer.org/installer | php && \
     mv composer.phar /usr/local/bin/composer
 
 # https://github.com/docker-library/php/blob/e63194a0006848edb13b7eff5a7f9d790d679428/7.1/jessie/fpm/Dockerfile
 RUN set -ex \
-    && cd /etc/php/7.4/fpm \
+    && cd /etc/php/8.0/fpm \
     && { \
         echo '[global]'; \
         echo 'error_log = /proc/self/fd/2'; \

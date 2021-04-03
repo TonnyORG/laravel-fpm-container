@@ -5,6 +5,11 @@ Dockerfile configured for Laravel, PHP-FPM.
 
 # Versions
 
+##### v2.0.0
+
+- **Ubuntu**: 20.04
+- **PHP**: 8.0
+
 ##### v1.1.0
 
 - **Ubuntu**: 18.04
